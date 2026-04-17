@@ -1,29 +1,73 @@
 package com.example.experiment_7_springboot2.controller;
 
 import com.example.experiment_7_springboot2.entity.Doctor;
-import com.example.experiment_7_springboot2.service.DoctorService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+interface DoctorRepository extends JpaRepository<Doctor, Long> {
+}
+
+
+@org.springframework.stereotype.Service
+class DoctorService {
+
+    @Autowired
+    private DoctorRepository doctorRepository;
+
+    public Doctor saveDoctor(Doctor doctor) {
+        return doctorRepository.save(doctor);
+    }
+
+    public Page<Doctor> getAllDoctors(Pageable pageable) {
+        return doctorRepository.findAll(pageable);
+    }
+
+    public Optional<Doctor> getDoctorById(Long id) {
+        return doctorRepository.findById(id);
+    }
+
+    public Doctor updateDoctor(Long id, Doctor doctor) {
+        Doctor existing = doctorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Doctor not found"));
+
+        existing.setName(doctor.getName());
+        existing.setSpecialization(doctor.getSpecialization());
+
+        return doctorRepository.save(existing);
+    }
+
+    public void deleteDoctor(Long id) {
+        doctorRepository.deleteById(id);
+    }
+}
+
 
 @RestController
 @RequestMapping("/doctors")
 public class DoctorController {
 
-    private final DoctorService doctorService;
-
-    public DoctorController(DoctorService doctorService) {
-        this.doctorService = doctorService;
-    }
+    @Autowired
+    private DoctorService doctorService;
 
     @PostMapping
     public Doctor createDoctor(@RequestBody Doctor doctor) {
         return doctorService.saveDoctor(doctor);
     }
 
+  
     @GetMapping
-    public List<Doctor> getAllDoctors() {
-        return doctorService.getAllDoctors();
+    public Page<Doctor> getAllDoctors(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "id") String sortBy
+    ) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+        return doctorService.getAllDoctors(pageable);
     }
 
     @GetMapping("/{id}")
