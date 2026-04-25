@@ -1,0 +1,39 @@
+.app-container {
+  max-width: 420px;
+  margin: 3rem auto;
+  padding: 1.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.app-container h1 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  text-align: center;
+}
+
+.patient-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.patient-form input {
+  padding: 0.6rem 0.7rem;
+  border: 1px solid #9ca3af;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.patient-form button {
+  margin-top: 0.5rem;
+  padding: 0.7rem;
+  border: 0;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+}

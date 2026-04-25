@@ -1,0 +1,46 @@
+:root {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #f7f7f7;
+  color: #1f2937;
+}
+
+.app {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+
+.navbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #0f172a;
+  background: #e5e7eb;
+  padding: 8px 14px;
+  border-radius: 6px;
+}
+
+.nav-link.active {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.page-content {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 24px;
+}
